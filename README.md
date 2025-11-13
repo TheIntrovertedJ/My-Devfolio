@@ -8,8 +8,6 @@ A minimal starter README for the Devfolio project — my personal developer port
 - [Features](#features)
 - [Getting Started](#getting-started)
 - [Development](#development)
-- [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
 
 ## About
@@ -30,35 +28,36 @@ Prerequisites:
 - Node.js (v14+)
 - npm or yarn
 
-Quick start:
+## Tech Stack
 
-1. Clone the repo:
-   git clone <repository-url>
-   cd devfolio
-2. Install dependencies:
-   npm install
-3. Update site content:
-   - Replace placeholders (name, bio, contact links) in the relevant config files and src/ content.
-   - Add projects to the projects data or markdown files as appropriate.
-4. Run locally:
-   npm run dev
-5. Build for production:
-   npm run build
+These aare my main tech stack, if you want to know.
+
+- **Frontend:** HTML, CSS, JavaScript, React, TypeScript
+- **Backend:** Node.js, Express, MongoDB
+- **Runtime:** Node.js
+- **Language:** TypeScript, Java
+- **Deployment:** Vercel
+- **Tools:** Git, VS Code
 
 ## Development
 
-- Source files: src/
-- Build command: npm run build
-- Serve production build: npm run start
+- **Source files:** `src/`
+- **Build command:** `npm run build`
+- **Serve production build:** `npm run start`
 
-## Contributing
+## My Journey
 
-Contributions are welcome. Open issues for bugs or feature requests and submit PRs against the main branch. Follow the code style and include tests where appropriate.
+This portfolio was built to showcase my growth as a developer. I focused on creating a clean, performant experience that highlights my best work while maintaining a minimalist design aesthetic.
 
-## License
+### Key Learnings
 
-Specify a license in LICENSE (e.g., MIT).
+- Optimized performance through lazy loading and code splitting
+- Implemented responsive design principles across all breakpoints
+- Integrated modern tooling for streamlined development workflows
+- Practiced accessibility standards (WCAG) for inclusive design
 
 ## Contact
 
-Project maintainer: <your-name> — replace placeholders with actual details.
+**Project Maintainer:** Japhet
+
+For inquiries or collaboration opportunities, visit my portfolio or reach out directly.
