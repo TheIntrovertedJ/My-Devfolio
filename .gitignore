@@ -1,0 +1,22 @@
+# Node
+node_modules/
+
+# Build
+dist/
+build/
+
+# OS & editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Env
+.env
+
+# logs
+logs/
+*.log
+
+# OneDrive temp files (if any)
+~$*
