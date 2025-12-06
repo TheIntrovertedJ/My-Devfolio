@@ -1,0 +1,172 @@
+import { Request, Response, Router } from 'express';
+import { Project } from '../models/Project';
+
+const router = Router();
+
+/**
+ * GET /api/projects
+ * Fetch all projects with optional filtering
+ * Query params: featured (boolean), tags (comma-separated)
+ */
+router.get('/', async (req: Request, res: Response) => {
+	try {
+		const { featured, tags } = req.query;
+		const filter: any = {};
+
+		if (featured === 'true') {
+			filter.featured = true;
+		}
+
+		if (tags && typeof tags === 'string') {
+			filter.tags = { $in: tags.split(',') };
+		}
+
+		const projects = await Project.find(filter).sort({ createdAt: -1 });
+		res.json({
+			success: true,
+			data: projects,
+			count: projects.length,
+		});
+	} catch (error) {
+		res.status(500).json({
+			success: false,
+			message: 'Failed to fetch projects',
+			error: error instanceof Error ? error.message : 'Unknown error',
+		});
+	}
+});
+
+/**
+ * GET /api/projects/:id
+ * Fetch a single project by ID
+ */
+router.get('/:id', async (req: Request, res: Response) => {
+	try {
+		const project = await Project.findById(req.params.id);
+
+		if (!project) {
+			return res.status(404).json({
+				success: false,
+				message: 'Project not found',
+			});
+		}
+
+		res.json({
+			success: true,
+			data: project,
+		});
+	} catch (error) {
+		res.status(500).json({
+			success: false,
+			message: 'Failed to fetch project',
+			error: error instanceof Error ? error.message : 'Unknown error',
+		});
+	}
+});
+
+/**
+ * POST /api/projects
+ * Create a new project
+ */
+router.post('/', async (req: Request, res: Response) => {
+	try {
+		const { title, description, url, imageUrl, tags, featured } = req.body;
+
+		const newProject = new Project({
+			title,
+			description,
+			url,
+			imageUrl,
+			tags: tags || [],
+			featured: featured || false,
+		});
+
+		await newProject.save();
+
+		res.status(201).json({
+			success: true,
+			message: 'Project created successfully',
+			data: newProject,
+		});
+	} catch (error) {
+		res.status(400).json({
+			success: false,
+			message: 'Failed to create project',
+			error: error instanceof Error ? error.message : 'Unknown error',
+		});
+	}
+});
+
+/**
+ * PUT /api/projects/:id
+ * Update a project by ID
+ */
+router.put('/:id', async (req: Request, res: Response) => {
+	try {
+		const { title, description, url, imageUrl, tags, featured } = req.body;
+
+		const project = await Project.findByIdAndUpdate(
+			req.params.id,
+			{
+				title,
+				description,
+				url,
+				imageUrl,
+				tags,
+				featured,
+				updatedAt: new Date(),
+			},
+			{ new: true, runValidators: true }
+		);
+
+		if (!project) {
+			return res.status(404).json({
+				success: false,
+				message: 'Project not found',
+			});
+		}
+
+		res.json({
+			success: true,
+			message: 'Project updated successfully',
+			data: project,
+		});
+	} catch (error) {
+		res.status(400).json({
+			success: false,
+			message: 'Failed to update project',
+			error: error instanceof Error ? error.message : 'Unknown error',
+		});
+	}
+});
+
+/**
+ * DELETE /api/projects/:id
+ * Delete a project by ID
+ */
+router.delete('/:id', async (req: Request, res: Response) => {
+	try {
+		const project = await Project.findByIdAndDelete(req.params.id);
+
+		if (!project) {
+			return res.status(404).json({
+				success: false,
+				message: 'Project not found',
+			});
+		}
+
+		res.json({
+			success: true,
+			message: 'Project deleted successfully',
+			data: project,
+		});
+	} catch (error) {
+		res.status(500).json({
+			success: false,
+			message: 'Failed to delete project',
+			error: error instanceof Error ? error.message : 'Unknown error',
+		});
+	}
+});
+
+export default router;
