@@ -6,11 +6,18 @@
 	"scripts": {
 		"build": "tsc -p tsconfig.json",
 		"dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-		"start": "node dist/server.js"
+		"start": "node dist/server.js",
+		"db:init": "ts-node ../db/scripts/init-db.ts",
+		"db:seed": "ts-node ../db/seeds/seed.ts",
+		"db:reset": "ts-node ../db/scripts/reset-db.ts",
+		"db:backup": "ts-node ../db/scripts/backup.ts backup",
+		"db:restore": "ts-node ../db/scripts/backup.ts restore"
 	},
 	"dependencies": {
 		"cors": "^2.8.5",
-		"express": "^4.18.2"
+		"dotenv": "^16.6.1",
+		"express": "^4.18.2",
+		"mongoose": "^7.8.8"
 	},
 	"devDependencies": {
 		"@types/cors": "^2.8.19",

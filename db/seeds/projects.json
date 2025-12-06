@@ -1,0 +1,26 @@
+[
+	{
+		"title": "Devfolio",
+		"description": "Personal portfolio showcasing projects, skills, and experience as a full-stack developer",
+		"url": "https://github.com/tobilobajd/my-devfolio",
+		"imageUrl": "/assets/img/devfolio-preview.png",
+		"tags": ["TypeScript", "React", "Express", "MongoDB", "CSS"],
+		"featured": true
+	},
+	{
+		"title": "Weather App",
+		"description": "Real-time weather application with geolocation support",
+		"url": "https://github.com/tobilobajd/weather-app",
+		"imageUrl": "/assets/img/weather-app.png",
+		"tags": ["JavaScript", "API", "Responsive Design"],
+		"featured": false
+	},
+	{
+		"title": "Task Manager",
+		"description": "Full-stack todo application with authentication and real-time updates",
+		"url": "https://github.com/tobilobajd/task-manager",
+		"imageUrl": "/assets/img/task-manager.png",
+		"tags": ["React", "Node.js", "MongoDB", "JWT"],
+		"featured": true
+	}
+]

@@ -343,6 +343,26 @@ body {
 	opacity: 0.12;
 }
 
+.section {
+	padding-block: var(--section-padding);
+}
+
+.container {
+	padding-inline: 16px;
+}
+
+.img-holder {
+	aspect-ratio: var(--width) / var(--height);
+	background-color: transparent;
+	overflow: hidden;
+}
+
+.img-cover {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
 /* -------------- #COMPONENTS -------------- */
 
 /**
@@ -355,6 +375,42 @@ body {
 	display: grid;
 	place-items: center;
 }
+
+/**
+ * TAB
+ */
+
+/**
+  * CHIP
+  */
+
+.chip {
+	height: 32px;
+	max-width: max-content;
+	text-decoration: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	padding-inline: 16px;
+	border: 1px solid var(--outline);
+	border-radius: var(--shape-corner-small);
+	background-color: var(--surface);
+	color: var(--on-surface-variant);
+	--state-layer-bg: var(--on-surface-variant);
+}
+
+.chip .material-symbols-outlined {
+	font-size: 1.8rem;
+}
+
+/**
+  * CARD
+  */
+
+/**
+  * INPUT FIELD
+  */
 
 /* ---------------- #TOPBAR ---------------- */
 
@@ -385,11 +441,46 @@ body {
 .theme-btn {
 	color: var(--on-surface-variant);
 	--state-layer-bg: var(--on-surface-variant);
-	border-radius: var(--radius-full);
+	border-radius: var(--shape-corner-full);
 	overflow: hidden;
 }
 
 [data-theme='dark'] .theme-btn .dark,
 [data-theme='light'] .theme-btn .light {
 	display: none;
+}
+
+/* ------------------ #HERO ---------------- */
+.hero {
+	padding-block-start: calc(var(--top-bar-height) + 24px);
+}
+
+.hero .container {
+	display: grid;
+	align-items: center;
+	gap: 24px;
+}
+
+.hero-banner {
+	width: 240px;
+	border-radius: var(--shape-corner-circle);
+}
+
+.hero-content {
+	max-width: 500px;
+}
+
+.hero .section-subtitle {
+	color: var(--on-surface-variant);
+}
+
+.hero .section-text {
+	margin-block: 5px 16px;
+	color: var(--on-surface-variant);
+}
+
+.hero .btn-wrapper {
+	flex-wrap: wrap;
+	display: flex;
+	gap: 8px;
 }

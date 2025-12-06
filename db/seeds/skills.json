@@ -1,0 +1,62 @@
+[
+	{
+		"name": "TypeScript",
+		"category": "language",
+		"proficiency": 5
+	},
+	{
+		"name": "JavaScript",
+		"category": "language",
+		"proficiency": 5
+	},
+	{
+		"name": "Java",
+		"category": "language",
+		"proficiency": 4
+	},
+	{
+		"name": "React",
+		"category": "framework",
+		"proficiency": 5
+	},
+	{
+		"name": "Express",
+		"category": "framework",
+		"proficiency": 5
+	},
+	{
+		"name": "Node.js",
+		"category": "framework",
+		"proficiency": 5
+	},
+	{
+		"name": "MongoDB",
+		"category": "database",
+		"proficiency": 4
+	},
+	{
+		"name": "PostgreSQL",
+		"category": "database",
+		"proficiency": 3
+	},
+	{
+		"name": "Git",
+		"category": "tool",
+		"proficiency": 5
+	},
+	{
+		"name": "Docker",
+		"category": "tool",
+		"proficiency": 3
+	},
+	{
+		"name": "VS Code",
+		"category": "tool",
+		"proficiency": 5
+	},
+	{
+		"name": "CSS/SCSS",
+		"category": "language",
+		"proficiency": 5
+	}
+]

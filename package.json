@@ -1,13 +1,20 @@
 {
-"name": "my-devfolio",
-"version": "1.0.0",
-"private": true,
-"scripts": {
-"start:backend": "cd backend && npm run dev",
-"start:frontend": "cd frontend && npm run dev",
-"start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
-},
-"devDependencies": {
-"concurrently": "^8.0.0"
-}
+	"name": "my-devfolio",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"start:backend": "cd backend && npm run dev",
+		"start:frontend": "cd frontend && npm run dev",
+		"start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
+	},
+	"devDependencies": {
+		"@types/node": "^24.10.1",
+		"concurrently": "^8.0.0",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.9.3"
+	},
+	"dependencies": {
+		"dotenv": "^17.2.3",
+		"mongoose": "^9.0.1"
+	}
 }
