@@ -164,7 +164,7 @@ router.put('/:id', async (req: Request, res: Response) => {
 
 		const project = await Project.findByIdAndUpdate(
 			req.params.id,
-			updateObj,
+			{ $set: updateObj },
 			{ new: true, runValidators: true }
 		);
 
