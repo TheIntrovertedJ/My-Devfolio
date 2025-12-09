@@ -99,6 +99,18 @@ router.put('/:id', async (req: Request, res: Response) => {
 	try {
 		const { name, category, proficiency } = req.body;
 
+		// Validate that fields are strictly strings to prevent NoSQL injection
+		if (
+			(typeof name !== 'string') ||
+			(typeof category !== 'string') ||
+			(typeof proficiency !== 'string')
+		) {
+			return res.status(400).json({
+				success: false,
+				message: 'Invalid input for skill update – all fields must be strings.',
+			});
+		}
+
 		const skill = await Skill.findByIdAndUpdate(
 			req.params.id,
 			{
