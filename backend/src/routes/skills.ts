@@ -1,7 +1,17 @@
 import { Request, Response, Router } from 'express';
 import { Skill } from '../models/Skill';
-
+import rateLimit from 'express-rate-limit';
 const router = Router();
+
+// Rate limiter middleware for destructive skill operations
+const deleteSkillRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // limit each IP to 10 delete requests per windowMs
+  message: {
+    success: false,
+    message: "Too many delete requests from this IP, please try again later."
+  }
+});
 
 /**
  * GET /api/skills
@@ -147,7 +157,7 @@ router.put('/:id', async (req: Request, res: Response) => {
  * DELETE /api/skills/:id
  * Delete a skill by ID
  */
-router.delete('/:id', async (req: Request, res: Response) => {
+router.delete('/:id', deleteSkillRateLimiter, async (req: Request, res: Response) => {
 	try {
 		const skill = await Skill.findByIdAndDelete(req.params.id);
 
