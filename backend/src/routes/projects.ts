@@ -1,7 +1,18 @@
 import { Request, Response, Router } from 'express';
 import { Project } from '../models/Project';
+import rateLimit from 'express-rate-limit';
 
-const router = Router();
+// Limit DELETE requests to maximum 5 per minute per IP to mitigate abuse
+const deleteProjectLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 5, // limit each IP to 5 delete requests per 'window' (per minute)
+  message: {
+    success: false,
+    message: 'Too many project deletions from this IP, please try again later.',
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 /**
  * GET /api/projects
@@ -193,7 +204,7 @@ router.put('/:id', async (req: Request, res: Response) => {
  * DELETE /api/projects/:id
  * Delete a project by ID
  */
-router.delete('/:id', async (req: Request, res: Response) => {
+router.delete('/:id', deleteProjectLimiter, async (req: Request, res: Response) => {
 	try {
 		const project = await Project.findByIdAndDelete(req.params.id);
 
