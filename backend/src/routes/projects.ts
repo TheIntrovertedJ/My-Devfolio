@@ -105,17 +105,66 @@ router.put('/:id', async (req: Request, res: Response) => {
 	try {
 		const { title, description, url, imageUrl, tags, featured } = req.body;
 
+		// Input validation and sanitization
+		let updateObj: any = { updatedAt: new Date() };
+		if (title !== undefined) {
+			if (typeof title !== "string") {
+				return res.status(400).json({
+					success: false,
+					message: "Invalid type for title."
+				});
+			}
+			updateObj.title = title;
+		}
+		if (description !== undefined) {
+			if (typeof description !== "string") {
+				return res.status(400).json({
+					success: false,
+					message: "Invalid type for description."
+				});
+			}
+			updateObj.description = description;
+		}
+		if (url !== undefined) {
+			if (typeof url !== "string") {
+				return res.status(400).json({
+					success: false,
+					message: "Invalid type for url."
+				});
+			}
+			updateObj.url = url;
+		}
+		if (imageUrl !== undefined) {
+			if (typeof imageUrl !== "string") {
+				return res.status(400).json({
+					success: false,
+					message: "Invalid type for imageUrl."
+				});
+			}
+			updateObj.imageUrl = imageUrl;
+		}
+		if (tags !== undefined) {
+			if (!Array.isArray(tags) || tags.some(tag => typeof tag !== "string")) {
+				return res.status(400).json({
+					success: false,
+					message: "Invalid type for tags."
+				});
+			}
+			updateObj.tags = tags;
+		}
+		if (featured !== undefined) {
+			if (typeof featured !== "boolean") {
+				return res.status(400).json({
+					success: false,
+					message: "Invalid type for featured."
+				});
+			}
+			updateObj.featured = featured;
+		}
+
 		const project = await Project.findByIdAndUpdate(
 			req.params.id,
-			{
-				title,
-				description,
-				url,
-				imageUrl,
-				tags,
-				featured,
-				updatedAt: new Date(),
-			},
+			{ $set: updateObj },
 			{ new: true, runValidators: true }
 		);
 
