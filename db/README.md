@@ -40,10 +40,12 @@ sudo apt-get install mongodb
 Create a `.env` file in the project root:
 
 ```env
-MONGODB_URI=mongodb://localhost:27017/devfolio
-# Or for MongoDB Atlas:
-# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/devfolio
+MONGODB_URI=mongodb://127.0.0.1:27017/devfolio
+# Or for MongoDB Atlas (use a placeholder and keep real creds out of git):
+# MONGODB_URI="mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.example.mongodb.net/devfolio?retryWrites=true&w=majority"
 ```
+
+Note: Do not commit real credentials. Keep your actual connection string in a local `.env` file (the repository `.gitignore` already excludes `.env`).
 
 ### 3. Install Dependencies
 
@@ -202,6 +204,28 @@ npm install mongoose
 
 - Check MongoDB is running: `sudo systemctl status mongodb`
 - Verify `MONGODB_URI` in `.env`
+
+## Repository Secret Checks (CI)
+
+This repository includes a lightweight GitHub Action that runs on `push` and `pull_request` to `main`. The action executes `tools/check-secrets.sh` and will fail the workflow if it finds obvious embedded MongoDB credentials (patterns like `mongodb+srv://USER:PASS@...`).
+
+Files added:
+
+- `.github/workflows/secret-scan.yml` — CI workflow that runs the check
+- `tools/check-secrets.sh` — repo-scoped pattern check (used by the workflow)
+- `tools/scan-history.sh` — local script to scan git history for leaked URIs
+
+How to run locally:
+
+```bash
+# Quick check of current working tree
+./tools/check-secrets.sh
+
+# Scan git history (may produce false positives; run locally)
+./tools/scan-history.sh
+```
+
+If the CI detects a secret, remove it from the files, rotate the secret if it was real, and add an entry to `.gitignore` if necessary to avoid re-committing sensitive files.
 
 **"Authentication failed"**
 

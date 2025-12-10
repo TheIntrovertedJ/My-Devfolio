@@ -27,8 +27,11 @@ NODE_ENV=development
 For MongoDB Atlas (cloud):
 
 ```env
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/devfolio
+# Use a placeholder and store real credentials in your local `.env` (DO NOT commit):
+MONGODB_URI="mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.example.mongodb.net/devfolio?retryWrites=true&w=majority"
 ```
+
+Warning: never paste your real username/password into files tracked by git. Always keep secrets in a local `.env` (already included in `.gitignore`).
 
 ### 3. Seed Database (Optional)
 
