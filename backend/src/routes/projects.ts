@@ -28,6 +28,18 @@ const putProjectLimiter = rateLimit({
 	legacyHeaders: false,
 });
 
+// Limit GET-by-ID requests to maximum 20 per minute per IP to mitigate abuse
+const getProjectByIdLimiter = rateLimit({
+	windowMs: 60 * 1000, // 1 minute
+	max: 20, // limit each IP to 20 get-by-id requests per 'window'
+	message: {
+		success: false,
+		message: 'Too many requests for project details from this IP, please try again later.',
+	},
+	standardHeaders: true,
+	legacyHeaders: false,
+});
+
 /**
  * GET /api/projects
  * Fetch all projects with optional filtering
@@ -65,7 +77,7 @@ router.get('/', async (req: Request, res: Response) => {
  * GET /api/projects/:id
  * Fetch a single project by ID
  */
-router.get('/:id', async (req: Request, res: Response) => {
+router.get('/:id', getProjectByIdLimiter, async (req: Request, res: Response) => {
 	try {
 		const project = await Project.findById(req.params.id);
 
