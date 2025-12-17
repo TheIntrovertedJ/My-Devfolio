@@ -16,6 +16,18 @@ const deleteProjectLimiter = rateLimit({
 	legacyHeaders: false,
 });
 
+// Limit PUT requests to maximum 10 per minute per IP to mitigate abuse
+const putProjectLimiter = rateLimit({
+	windowMs: 60 * 1000, // 1 minute
+	max: 10, // limit each IP to 10 put requests per 'window' (per minute)
+	message: {
+		success: false,
+		message: 'Too many project updates from this IP, please try again later.',
+	},
+	standardHeaders: true,
+	legacyHeaders: false,
+});
+
 /**
  * GET /api/projects
  * Fetch all projects with optional filtering
@@ -114,7 +126,7 @@ router.post('/', async (req: Request, res: Response) => {
  * PUT /api/projects/:id
  * Update a project by ID
  */
-router.put('/:id', async (req: Request, res: Response) => {
+router.put('/:id', putProjectLimiter, async (req: Request, res: Response) => {
 	try {
 		const { title, description, url, imageUrl, tags, featured } = req.body;
 
