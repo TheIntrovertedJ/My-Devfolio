@@ -1,17 +1,19 @@
 import { Request, Response, Router } from 'express';
-import { Project } from '../models/Project';
 import rateLimit from 'express-rate-limit';
+import { Project } from '../models/Project';
+
+const router = Router();
 
 // Limit DELETE requests to maximum 5 per minute per IP to mitigate abuse
 const deleteProjectLimiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  max: 5, // limit each IP to 5 delete requests per 'window' (per minute)
-  message: {
-    success: false,
-    message: 'Too many project deletions from this IP, please try again later.',
-  },
-  standardHeaders: true,
-  legacyHeaders: false,
+	windowMs: 60 * 1000, // 1 minute
+	max: 5, // limit each IP to 5 delete requests per 'window' (per minute)
+	message: {
+		success: false,
+		message: 'Too many project deletions from this IP, please try again later.',
+	},
+	standardHeaders: true,
+	legacyHeaders: false,
 });
 
 /**
@@ -119,55 +121,55 @@ router.put('/:id', async (req: Request, res: Response) => {
 		// Input validation and sanitization
 		let updateObj: any = { updatedAt: new Date() };
 		if (title !== undefined) {
-			if (typeof title !== "string") {
+			if (typeof title !== 'string') {
 				return res.status(400).json({
 					success: false,
-					message: "Invalid type for title."
+					message: 'Invalid type for title.',
 				});
 			}
 			updateObj.title = title;
 		}
 		if (description !== undefined) {
-			if (typeof description !== "string") {
+			if (typeof description !== 'string') {
 				return res.status(400).json({
 					success: false,
-					message: "Invalid type for description."
+					message: 'Invalid type for description.',
 				});
 			}
 			updateObj.description = description;
 		}
 		if (url !== undefined) {
-			if (typeof url !== "string") {
+			if (typeof url !== 'string') {
 				return res.status(400).json({
 					success: false,
-					message: "Invalid type for url."
+					message: 'Invalid type for url.',
 				});
 			}
 			updateObj.url = url;
 		}
 		if (imageUrl !== undefined) {
-			if (typeof imageUrl !== "string") {
+			if (typeof imageUrl !== 'string') {
 				return res.status(400).json({
 					success: false,
-					message: "Invalid type for imageUrl."
+					message: 'Invalid type for imageUrl.',
 				});
 			}
 			updateObj.imageUrl = imageUrl;
 		}
 		if (tags !== undefined) {
-			if (!Array.isArray(tags) || tags.some(tag => typeof tag !== "string")) {
+			if (!Array.isArray(tags) || tags.some((tag) => typeof tag !== 'string')) {
 				return res.status(400).json({
 					success: false,
-					message: "Invalid type for tags."
+					message: 'Invalid type for tags.',
 				});
 			}
 			updateObj.tags = tags;
 		}
 		if (featured !== undefined) {
-			if (typeof featured !== "boolean") {
+			if (typeof featured !== 'boolean') {
 				return res.status(400).json({
 					success: false,
-					message: "Invalid type for featured."
+					message: 'Invalid type for featured.',
 				});
 			}
 			updateObj.featured = featured;
@@ -204,29 +206,33 @@ router.put('/:id', async (req: Request, res: Response) => {
  * DELETE /api/projects/:id
  * Delete a project by ID
  */
-router.delete('/:id', deleteProjectLimiter, async (req: Request, res: Response) => {
-	try {
-		const project = await Project.findByIdAndDelete(req.params.id);
+router.delete(
+	'/:id',
+	deleteProjectLimiter,
+	async (req: Request, res: Response) => {
+		try {
+			const project = await Project.findByIdAndDelete(req.params.id);
 
-		if (!project) {
-			return res.status(404).json({
+			if (!project) {
+				return res.status(404).json({
+					success: false,
+					message: 'Project not found',
+				});
+			}
+
+			res.json({
+				success: true,
+				message: 'Project deleted successfully',
+				data: project,
+			});
+		} catch (error) {
+			res.status(500).json({
 				success: false,
-				message: 'Project not found',
+				message: 'Failed to delete project',
+				error: error instanceof Error ? error.message : 'Unknown error',
 			});
 		}
-
-		res.json({
-			success: true,
-			message: 'Project deleted successfully',
-			data: project,
-		});
-	} catch (error) {
-		res.status(500).json({
-			success: false,
-			message: 'Failed to delete project',
-			error: error instanceof Error ? error.message : 'Unknown error',
-		});
 	}
-});
+);
 
 export default router;
