@@ -1,8 +1,6 @@
 Devfolio - A Software Engineer Portfolio
 
 
-This is a personal portfolio made by codewithsadee
-
 https://prod.liveshare.vsengsaas.visualstudio.com/join?0D57B5302506A6B1FDEE09DD05B6322C0EFE
 
 
@@ -42,10 +40,9 @@ About
 A passionate software engineer with a strong background in Computer Science.
 
 <span class="material-symbols-outlined" aria-hidden="true"> location_on </span>
-Cairo, Egypt
 
 <span class="material-symbols-outlined" aria-hidden="true"> work </span>
-TechGulf Solutions
+
 
 <span class="material-symbols-outlined" aria-hidden="true"> captive_portal </span>
 https://example.com

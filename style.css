@@ -363,6 +363,10 @@ body {
 	object-fit: cover;
 }
 
+.tab-content:not(.active) {
+	display: none;
+}
+
 /* -------------- #COMPONENTS -------------- */
 
 /**
@@ -379,6 +383,53 @@ body {
 /**
  * TAB
  */
+
+.primary-tabs {
+	background-color: var(--background);
+	margin-block-start: 24px;
+	margin-inline: 16px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	justify-content: center;
+	border-block-end: 1px solid var(--outline-variant);
+}
+
+.tab-btn {
+	height: 48px;
+	width: 100%;
+	display: grid;
+	place-content: center;
+	background-color: var(--surface);
+	color: var(--on-surface-variant);
+	--state-layer-bg: var(--on-surface-variant);
+}
+
+.tab-btn.active {
+	color: var(--primary);
+	--state-layer-bg: var(--primary);
+}
+
+.tab-text {
+	position: relative;
+	height: 48px;
+	line-height: 48px;
+}
+
+.tab-text::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 3px;
+	border-radius: 3px 3px 0 0;
+	background-color: var(--primary);
+	opacity: 0;
+}
+
+.tab-btn.active .tab-text::after {
+	opacity: 1;
+}
 
 /**
   * CHIP
@@ -407,6 +458,30 @@ body {
 /**
   * CARD
   */
+
+.card {
+	background-color: var(--surface-container-low);
+	border-radius: var(--shape-corner-medium);
+	padding: 16px;
+	--state-layer-bg: var(--on-surface);
+}
+
+.card-banner {
+	border-radius: var(--shape-corner-medium);
+}
+
+.card-content {
+	display: grid;
+	gap: 4px;
+}
+
+.card-subtitle {
+	color: var(--on-surface-variant);
+}
+
+.card-title {
+	color: var(--on-surface);
+}
 
 /**
   * INPUT FIELD
@@ -483,4 +558,60 @@ body {
 	flex-wrap: wrap;
 	display: flex;
 	gap: 8px;
+}
+
+/* --------------- #ABOUT CARD --------------- */
+.about-card {
+	background-color: var(--surface-container-low);
+	color: var(--on-surface-variant);
+	margin-inline: 16px;
+	padding: 16px;
+	border-radius: var(--shape-corner-large);
+}
+
+.about-card .card-title {
+	color: var(--on-surface);
+}
+
+.about-card .card-text {
+	margin-block: 12px;
+	padding-block: 12px;
+	border-block: 1px solid var(--outline-variant);
+}
+
+.about-list {
+	display: grid;
+	gap: 12px;
+}
+
+.list-item {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+/* ---------------- #PROJECTS --------------- */
+.project-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 12px;
+}
+
+.card {
+	background-color: var(--surface-container-low);
+	border-radius: var(--shape-corner-large);
+	overflow: hidden;
+}
+
+.card-banner {
+	width: 100%;
+	border-radius: var(--shape-corner-large);
+}
+
+.card-content {
+	padding: 16px;
+}
+
+.card-title {
+	color: var(--on-surface);
 }

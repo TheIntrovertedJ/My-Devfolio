@@ -25,7 +25,7 @@ This repository powers my personal developer portfolio. It’s configured to sho
 
 Prerequisites:
 
-- Node.js (v14+)
+- Node.js (v22+)
 - npm or yarn
 
 ## Tech Stack
