@@ -16,12 +16,48 @@ const deleteProjectLimiter = rateLimit({
 	legacyHeaders: false,
 });
 
+// Limit PUT requests to maximum 10 per minute per IP to mitigate abuse
+const putProjectLimiter = rateLimit({
+	windowMs: 60 * 1000, // 1 minute
+	max: 10, // limit each IP to 10 put requests per 'window' (per minute)
+	message: {
+		success: false,
+		message: 'Too many project updates from this IP, please try again later.',
+	},
+	standardHeaders: true,
+	legacyHeaders: false,
+});
+
+// Limit GET-by-ID requests to maximum 20 per minute per IP to mitigate abuse
+const getProjectByIdLimiter = rateLimit({
+	windowMs: 60 * 1000, // 1 minute
+	max: 20, // limit each IP to 20 get-by-id requests per 'window'
+	message: {
+		success: false,
+		message: 'Too many requests for project details from this IP, please try again later.',
+	},
+	standardHeaders: true,
+	legacyHeaders: false,
+});
+
+// Limit GET-all-projects requests to maximum 20 per minute per IP to mitigate abuse
+const getProjectsLimiter = rateLimit({
+	windowMs: 60 * 1000, // 1 minute
+	max: 20, // limit each IP to 20 get-projects requests per 'window'
+	message: {
+		success: false,
+		message: 'Too many requests for project list from this IP, please try again later.',
+	},
+	standardHeaders: true,
+	legacyHeaders: false,
+});
+
 /**
  * GET /api/projects
  * Fetch all projects with optional filtering
  * Query params: featured (boolean), tags (comma-separated)
  */
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', getProjectsLimiter, async (req: Request, res: Response) => {
 	try {
 		const { featured, tags } = req.query;
 		const filter: any = {};
@@ -53,7 +89,7 @@ router.get('/', async (req: Request, res: Response) => {
  * GET /api/projects/:id
  * Fetch a single project by ID
  */
-router.get('/:id', async (req: Request, res: Response) => {
+router.get('/:id', getProjectByIdLimiter, async (req: Request, res: Response) => {
 	try {
 		const project = await Project.findById(req.params.id);
 
@@ -114,7 +150,7 @@ router.post('/', async (req: Request, res: Response) => {
  * PUT /api/projects/:id
  * Update a project by ID
  */
-router.put('/:id', async (req: Request, res: Response) => {
+router.put('/:id', putProjectLimiter, async (req: Request, res: Response) => {
 	try {
 		const { title, description, url, imageUrl, tags, featured } = req.body;
 
