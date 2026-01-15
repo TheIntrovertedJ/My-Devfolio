@@ -683,7 +683,7 @@
 												<p class="label-small info-title">Location</p>
 
 												<a href="#" class="lable-small info-text"
-													>Block Stop, Ijaye Lagos 17, Nigeria</a
+													>Ijaye Lagos, Nigeria</a
 												>
 											</div>
 										</li>
@@ -783,41 +783,53 @@
 										</a>
 									</div>
 								</div>
-							</div>
 
-							<div class="contact-form">
-								<h3 class="title-large">Let’s Work Together.</h3>
+								<div class="contact-form">
+									<h3 class="title-large">Let’s Work Together.</h3>
 
-								<div class="input-wrapper">
-									<input
-										type="text"
-										name="name"
-										placeholder="Name*"
-										required
-										class="input-field"
-									/>
+									<form id="contactForm" class="input-wrapper">
+										<input
+											type="text"
+											name="name"
+											placeholder="Name*"
+											required
+											class="input-field"
+										/>
 
-									<input
-										type="email"
-										name="email"
-										placeholder="Email*"
-										required
-										class="input-field"
-									/>
+										<input
+											type="email"
+											name="email"
+											placeholder="Email*"
+											required
+											class="input-field"
+										/>
 
-									<input
-										type="text"
-										name="subject"
-										placeholder="Subject"
-										class="input-field"
-									/>
+										<input
+											type="text"
+											name="subject"
+											placeholder="Subject"
+											class="input-field"
+										/>
 
-									<textarea
-										name="message"
-										placeholder="Message*"
-										required
-										class="textarea"
-									></textarea>
+										<textarea
+											name="message"
+											placeholder="Message*"
+											required
+											class="textarea"
+										></textarea>
+
+										<button type="submit" class="btn" id="submitBtn">
+											<span class="label-large">Send Message</span>
+
+											<div class="state-layer"></div>
+										</button>
+
+										<div
+											id="formMessage"
+											class="form-message"
+											style="display: none"
+										></div>
+									</form>
 								</div>
 							</div>
 						</section>
